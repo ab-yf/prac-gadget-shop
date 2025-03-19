@@ -36,7 +36,7 @@ namespace PracticeGadgetShopApi.Controllers
 
             connection.Close();
 
-            return Ok("Inventory Details have been saved successfully.");
+            return Ok();
         }
     }
 }
