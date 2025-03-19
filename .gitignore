@@ -1,0 +1,50 @@
+# Global ignores
+.DS_Store
+Thumbs.db
+
+# Frontend (Angular) - prac-gadget-shop
+/prac-gadget-shop/dist/
+/prac-gadget-shop/tmp/
+/prac-gadget-shop/out-tsc/
+/prac-gadget-shop/bazel-out/
+/prac-gadget-shop/node_modules/
+/prac-gadget-shop/.angular/cache/
+/prac-gadget-shop/.vscode/
+/prac-gadget-shop/.idea/
+/prac-gadget-shop/coverage/
+/prac-gadget-shop/testem.log
+/prac-gadget-shop/.history/
+
+# Allow essential VSCode settings for Angular
+/prac-gadget-shop/.vscode/*
+!/prac-gadget-shop/.vscode/settings.json
+!/prac-gadget-shop/.vscode/tasks.json
+!/prac-gadget-shop/.vscode/launch.json
+!/prac-gadget-shop/.vscode/extensions.json
+
+# Backend (.NET) - PracticeGadgetShopApi
+/PracticeGadgetShopApi/[Bb]in/
+/PracticeGadgetShopApi/[Oo]bj/
+/PracticeGadgetShopApi/*.user
+/PracticeGadgetShopApi/*.suo
+/PracticeGadgetShopApi/*.pdb
+/PracticeGadgetShopApi/*.exe
+/PracticeGadgetShopApi/*.dll
+/PracticeGadgetShopApi/*.nupkg
+/PracticeGadgetShopApi/publish/
+/PracticeGadgetShopApi/.vs/
+
+# IDE and Editor Configs (Global)
+/.idea/
+/.project
+.classpath
+.c9/
+/*.launch
+.settings/
+/*.sublime-workspace
+
+# Node Logs (Global)
+npm-debug.log
+yarn-error.log
+connect.lock
+libpeerconnection.log

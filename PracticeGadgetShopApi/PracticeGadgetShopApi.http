@@ -1,0 +1,6 @@
+@PracticeGadgetShopApi_HostAddress = http://localhost:5053
+
+GET {{PracticeGadgetShopApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
