@@ -19,6 +19,19 @@ export class InventoryComponent {
 		reorderPoint: 0,
 	};
 
+  inventoryDetails: any;
+
+  ngOnInit(){
+    const apiUrl = "https://localhost:7107/api/Inventory";
+    // Fetching database entries on initialization of the component.
+    // We do not need HTTP Headers or the Body for fetching (GET).
+    this.httpClient.get(apiUrl).subscribe(data =>{
+      // Mapping the fetched data to the inventoryDetails as an object.
+      this.inventoryDetails = data;
+      console.log(this.inventoryDetails);
+    });
+  }
+
   // Called when form is submitted.
 	onSubmit(): void {
     // URL to which the form data will be POSTed.
