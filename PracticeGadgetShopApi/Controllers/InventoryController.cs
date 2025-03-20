@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Newtonsoft.Json;
 using PracticeGadgetShopApi.Models;
 using System.Data;
+using System.Text.Json.Serialization;
 
 namespace PracticeGadgetShopApi.Controllers
 {
@@ -20,6 +22,7 @@ namespace PracticeGadgetShopApi.Controllers
 
             SqlCommand command = new SqlCommand
             {
+                // The name of our stored procedure which saves the data to our Inventory table in the database.
                 CommandText = "sp_SaveInventoryData",
                 CommandType = CommandType.StoredProcedure,
                 Connection = connection
@@ -37,6 +40,51 @@ namespace PracticeGadgetShopApi.Controllers
             connection.Close();
 
             return Ok();
+        }
+
+        [HttpGet]
+        public ActionResult<InventoryDto> GetInventoryData()
+        {
+            SqlConnection connection = new SqlConnection
+            {
+                ConnectionString = "Server=localhost\\SQLEXPRESS;Database=gadgetShop;Trusted_Connection=True;TrustServerCertificate=true"
+            };
+
+            SqlCommand command = new SqlCommand
+            {
+                // The name of our stored procedure which fetches the data from our Inventory table in the database.
+                CommandText = "sp_GetInventoryData",
+                CommandType = CommandType.StoredProcedure,
+                Connection = connection
+            };
+
+            connection.Open();
+
+            // Creating the Inventory Dto List.
+            List<InventoryDto> response = new List<InventoryDto>();
+
+            // Using the SqlDataReader, we will perform the execute reader command and shall then create an object from the Inventory Dto list storing the data which we have read.
+            // We have created a seperate model to avoid confusion. If we need to perform modifications, they wouldn't carry over.
+            using (SqlDataReader sqlDataReader = command.ExecuteReader())
+            {
+                while (sqlDataReader.Read())
+                {
+                    InventoryDto inventoryDto = new InventoryDto();
+                    // The entire database entry table will be read with the reader, so we will just take the name of the particular column to get specific values.
+                    inventoryDto.ProductId = Convert.ToInt32(sqlDataReader["ProductId"]);
+                    inventoryDto.ProductName = Convert.ToString(sqlDataReader["ProductName"]);
+                    inventoryDto.AvailableQty = Convert.ToInt32(sqlDataReader["AvailableQty"]);
+                    inventoryDto.ReOrderPoint = Convert.ToInt32(sqlDataReader["ReOrderPoint"]);
+
+                    // We are specifying that we want to add the inventoryDto data into our list, which we have labelled as response.
+                    response.Add(inventoryDto);
+                }
+            }
+
+            connection.Close();
+
+            // We are returning the response as a JSON object, using Newtonsoft.Json.
+            return Ok(JsonConvert.SerializeObject(response));
         }
     }
 }

@@ -11,6 +11,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 export class InventoryComponent {
   httpClient = inject(HttpClient);
 
+  // Object holding the form data.
 	inventoryData = {
 		productId: '',
 		productName: '',
@@ -18,14 +19,19 @@ export class InventoryComponent {
 		reorderPoint: 0,
 	};
 
+  // Called when form is submitted.
 	onSubmit(): void {
+    // URL to which the form data will be POSTed.
     const apiUrl = "https://localhost:7107/api/Inventory";
+    // Contains HTTP Headers, including the Authorization token and content type.
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + localStorage.getItem('token'),
         'Content-Type': 'application/json',
       })
     }
+    // This method sends a POST request to the API with the form data and HTTP Options.
+    // Subscribe handles the response from the API.
     this.httpClient.post(apiUrl, this.inventoryData, httpOptions).subscribe({
       next: data => console.log(data),
       error : error => console.log('There was an error!', error),
