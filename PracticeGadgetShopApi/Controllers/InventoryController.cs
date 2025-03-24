@@ -117,6 +117,41 @@ namespace PracticeGadgetShopApi.Controllers
             return Ok();
 
         }
+
+        [HttpPut]
+        // We are accepting a paramter called inventoryRquest according to the InventoryRequestDto model.
+        public ActionResult<InventoryDto> UpdateInventoryData(InventoryRequestDto inventoryRequest)
+        {
+            SqlConnection connection = new SqlConnection
+            {
+                ConnectionString = "Server=localhost\\SQLEXPRESS;Database=gadgetShop;Trusted_Connection=True;TrustServerCertificate=true"
+            };
+
+            SqlCommand command = new SqlCommand
+            {
+                // The name of our stored procedure which updates the data from our Inventory table in the database.
+                CommandText = "sp_UpdateInventoryData",
+                CommandType = CommandType.StoredProcedure,
+                Connection = connection
+            };
+
+            connection.Open();
+
+            // Our function accepts the productId as a parameter, which is then used to update the data from the database.
+            command.Parameters.AddWithValue("@ProductId", inventoryRequest.ProductId);
+            command.Parameters.AddWithValue("@ProductName", inventoryRequest.ProductName);
+            command.Parameters.AddWithValue("@AvailableQty", inventoryRequest.AvailableQty);
+            command.Parameters.AddWithValue("@ReOrderPoint", inventoryRequest.ReOrderPoint);
+
+            // We are using the non-query method as we are not retrieving data, only updating it.
+            command.ExecuteNonQuery();
+
+            connection.Close();
+
+            // We are returning an OK status code to indicate that the data has been updated.
+            return Ok();
+
+        }
     }
 
 }
