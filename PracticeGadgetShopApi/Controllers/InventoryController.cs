@@ -86,5 +86,37 @@ namespace PracticeGadgetShopApi.Controllers
             // We are returning the response as a JSON object, using Newtonsoft.Json.
             return Ok(JsonConvert.SerializeObject(response));
         }
+
+        [HttpDelete]
+        public ActionResult<InventoryDto> DeleteInventoryData(int productId)
+        {
+            SqlConnection connection = new SqlConnection
+            {
+                ConnectionString = "Server=localhost\\SQLEXPRESS;Database=gadgetShop;Trusted_Connection=True;TrustServerCertificate=true"
+            };
+
+            SqlCommand command = new SqlCommand
+            {
+                // The name of our stored procedure which deletes the data from our Inventory table in the database.
+                CommandText = "sp_DeleteInventoryData",
+                CommandType = CommandType.StoredProcedure,
+                Connection = connection
+            };
+
+            connection.Open();
+
+            // Our function accepts the productId as a parameter, which is then used to delete the data from the database.
+            command.Parameters.AddWithValue("@ProductId", productId);
+
+            // We are using the non-query method as we are not retrieving data, only deleting it.
+            command.ExecuteNonQuery();
+
+            connection.Close();
+
+            // We are returning an OK status code to indicate that the data has been deleted.
+            return Ok();
+
+        }
     }
+
 }
