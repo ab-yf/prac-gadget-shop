@@ -24,8 +24,8 @@ The Gadget Shop Inventory Management System is designed to help manage gadget in
 
 ## Features
 
-- **Add New Gadgets**: Input details like name, category, price, and quantity.
-- **View Gadget List**: Display all gadgets with sorting and filtering options.
+- **Add New Gadgets**: Input details like name, category, quantity and reordering point.
+- **View Gadget List**: Display all gadgets in inventory.
 - **Update Gadget Information**: Modify existing gadget details.
 - **Delete Gadgets**: Remove gadgets from the inventory.
 - **Search Functionality**: Quickly find gadgets using keywords.
@@ -124,9 +124,9 @@ prac-gadget-shop/
 
 ## Usage
 
-1. **Add Gadgets**: Use the "Add Gadget" form to input new gadget details.
-2. **View Gadgets**: The homepage displays the list of all gadgets.
-3. **Edit Gadgets**: Click on a gadget to edit its information.
+1. **Add Gadgets**: Use the "Submit" button to add a new inventory item alongside its details.
+2. **View Gadgets**: The Inventory page, underneath the 'Admin' dropdown lists all the inventory items.
+3. **Edit Gadgets**: Click 'Edit' on an Inventory item to edit its information.
 4. **Delete Gadgets**: Use the delete option to remove a gadget from the inventory.
 
 ## License
