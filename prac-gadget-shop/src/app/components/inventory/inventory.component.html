@@ -30,6 +30,7 @@
         type="text"
         class="form-control"
         id="specificSizeInputName"
+        [disabled]="disableProductIdInput"
         placeholder="1001"
         [(ngModel)]="inventoryData.productId"
         name="productId"
@@ -101,7 +102,7 @@
           <td>{{ inventory.AvailableQty }}</td>
           <td>{{ inventory.ReOrderPoint }}</td>
           <td>
-            <button type="button" class="btn btn-primary">Edit</button>
+            <button type="button" class="btn btn-primary" (click)="populateFormForEdit(inventory)">Edit</button>
             <button type="button" class="btn btn-danger mx-2" (click)="openConfirmDialog(inventory.ProductId)">Delete
             </button>
           </td>
