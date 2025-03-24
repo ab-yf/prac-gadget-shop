@@ -15,6 +15,8 @@ export class InventoryComponent implements OnInit {
   httpClient = inject(HttpClient);
   // Variable to hold the ID of the product to be deleted.
   productIdToDelete: number = 0;
+  // Variable to hold the value of the productId input field.
+  disableProductIdInput = false;
   // Object holding the form data.
   inventoryData = {
     productId: '',
@@ -52,25 +54,54 @@ export class InventoryComponent implements OnInit {
         'Content-Type': 'application/json',
       })
     }
-    // This method sends a POST request to the API with the form data and HTTP Options.
-    // Subscribe handles the response from the API.
-    this.httpClient.post(apiUrl, this.inventoryData, httpOptions).subscribe({
-      next: data => console.log(data),
-      error: error => console.log('There was an error!', error),
-      complete: () => {
-        alert('You submitted the form!' + JSON.stringify(this.inventoryData));
-        // Fetch the updated inventory *after* the POST is complete.
-        this.fetchInventory();
-        // Clear the form (optional, but good practice)
-        this.inventoryData = {
-          productId: '',
-          productName: '',
-          availableQty: 0,
-          reorderPoint: 0
-        };
-      }
-    });
+
+    if (this.disableProductIdInput == true) {
+      // If the productId input field is disabled, send a PUT request instead.
+      // The URL will be the same as the POST request, but with the productId in the query string.
+      const putUrl = `${apiUrl}?productId=${this.inventoryData.productId}`;
+      // This method sends a PUT request to the API with the form data and HTTP Options.
+      // Subscribe handles the response from the API.
+      this.httpClient.put(putUrl, this.inventoryData, httpOptions).subscribe({
+        next: data => console.log(data),
+        error: error => console.log('There was an error!', error),
+        complete: () => {
+          alert('You submitted the form!' + JSON.stringify(this.inventoryData));
+          // Fetch the updated inventory *after* the PUT is complete.
+          this.fetchInventory();
+          // Clear the form (optional, but good practice)
+          this.inventoryData = {
+            productId: '',
+            productName: '',
+            availableQty: 0,
+            reorderPoint: 0
+          };
+          // Re-enable the productId input field after the PUT is complete.
+          this.disableProductIdInput = false;
+        }
+      });
+      return;
+    } else {
+      // This method sends a POST request to the API with the form data and HTTP Options.
+      // Subscribe handles the response from the API.
+      this.httpClient.post(apiUrl, this.inventoryData, httpOptions).subscribe({
+        next: data => console.log(data),
+        error: error => console.log('There was an error!', error),
+        complete: () => {
+          alert('You submitted the form!' + JSON.stringify(this.inventoryData));
+          // Fetch the updated inventory *after* the POST is complete.
+          this.fetchInventory();
+          // Clear the form (optional, but good practice)
+          this.inventoryData = {
+            productId: '',
+            productName: '',
+            availableQty: 0,
+            reorderPoint: 0
+          };
+        }
+      });
+    }
   }
+
 
   openConfirmDialog(productId: number) {
     // Set the productIdToDelete variable to the ID of the product to be deleted.
@@ -106,5 +137,15 @@ export class InventoryComponent implements OnInit {
         this.productIdToDelete = 0;
       }
     });
+  }
+
+  populateFormForEdit(inventory: any) {
+    // Populate the form with the data of the product to be edited.
+    this.inventoryData.productId = inventory.ProductId;
+    this.inventoryData.productName = inventory.ProductName;
+    this.inventoryData.availableQty = inventory.AvailableQty;
+    this.inventoryData.reorderPoint = inventory.ReOrderPoint;
+    // Disable the productId input field when editing.
+    this.disableProductIdInput = true;
   }
 }
