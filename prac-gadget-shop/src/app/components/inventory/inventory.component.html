@@ -1,110 +1,111 @@
 <div class="mx-3 my-2">
-	<h1>Inventory</h1>
+  <h1>Inventory</h1>
 </div>
 <div class="row mx-3">
-	<form
-		class="row gx-3 gy-2 align-items-center"
-		(ngSubmit)="onSubmit()"
-		novalidate
-	>
-		<div class="row">
-			<div class="col-sm-3">
-				<label>Product Id</label>
-			</div>
-			<div class="col-sm-3">
-				<label>Product Name</label>
-			</div>
-			<div class="col-sm-3">
-				<label>Quantity Available</label>
-			</div>
-			<div class="col-sm-3">
-				<label>Reorder Point</label>
-			</div>
-		</div>
+  <form
+    class="row gx-3 gy-2 align-items-center"
+    (ngSubmit)="onSubmit()"
+    novalidate
+  >
+    <div class="row">
+      <div class="col-sm-3">
+        <label>Product Id</label>
+      </div>
+      <div class="col-sm-3">
+        <label>Product Name</label>
+      </div>
+      <div class="col-sm-3">
+        <label>Quantity Available</label>
+      </div>
+      <div class="col-sm-3">
+        <label>Reorder Point</label>
+      </div>
+    </div>
 
-		<div class="col-sm-3">
-			<label class="visually-hidden" for="specificSizeInputName"
-				>Product Id</label
-			>
-			<input
-				type="text"
-				class="form-control"
-				id="specificSizeInputName"
-				placeholder="1001"
-				[(ngModel)]="inventoryData.productId"
-				name="productId"
-			/>
-		</div>
-		<div class="col-sm-3">
-			<label class="visually-hidden" for="specificSizeSelect">Product</label>
-			<select
-				class="form-select"
-				id="specificSizeSelect"
-				[(ngModel)]="inventoryData.productName"
+    <div class="col-sm-3">
+      <label class="visually-hidden" for="specificSizeInputName"
+      >Product Id</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="specificSizeInputName"
+        placeholder="1001"
+        [(ngModel)]="inventoryData.productId"
+        name="productId"
+      />
+    </div>
+    <div class="col-sm-3">
+      <label class="visually-hidden" for="specificSizeSelect">Product</label>
+      <select
+        class="form-select"
+        id="specificSizeSelect"
+        [(ngModel)]="inventoryData.productName"
         name="productName"
-			>
-				<option selected>Choose...</option>
-				<option value="Earphones">Earphones</option>
-				<option value="Mobiles">Mobiles</option>
-				<option value="Playstation">Playstation</option>
-			</select>
-		</div>
-		<div class="col-sm-3">
-			<label class="visually-hidden" for="specificSizeInputName"
-				>Quantity Available</label
-			>
-			<input
-				type="text"
-				class="form-control"
-				id="specificSizeInputName"
-				placeholder="0"
-				[(ngModel)]="inventoryData.availableQty"
-				name="availableQty"
-			/>
-		</div>
-		<div class="col-sm-3">
-			<label class="visually-hidden" for="specificSizeInputName"
-				>Reorder Qty</label
-			>
-			<input
-				type="text"
-				class="form-control"
-				id="specificSizeInputName"
-				placeholder="0"
-				[(ngModel)]="inventoryData.reorderPoint"
-				name="reorderPoint"
-			/>
-		</div>
-		<div class="col-auto">
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</div>
-	</form>
+      >
+        <option selected>Choose...</option>
+        <option value="Earphones">Earphones</option>
+        <option value="Mobiles">Mobiles</option>
+        <option value="Playstation">Playstation</option>
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <label class="visually-hidden" for="specificSizeInputName"
+      >Quantity Available</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="specificSizeInputName"
+        placeholder="0"
+        [(ngModel)]="inventoryData.availableQty"
+        name="availableQty"
+      />
+    </div>
+    <div class="col-sm-3">
+      <label class="visually-hidden" for="specificSizeInputName"
+      >Reorder Qty</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="specificSizeInputName"
+        placeholder="0"
+        [(ngModel)]="inventoryData.reorderPoint"
+        name="reorderPoint"
+      />
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
 </div>
 
 <div class="row mx-3 py-5">
-	<h5>Inventory Details</h5>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th scope="col">Product Id</th>
-				<th scope="col">Product Name</th>
-				<th scope="col">Stock Available</th>
-				<th scope="col">Reorder Point</th>
-				<th scope="col">Action</th>
-			</tr>
-		</thead>
+  <h5>Inventory Details</h5>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Product Id</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Stock Available</th>
+      <th scope="col">Reorder Point</th>
+      <th scope="col">Action</th>
+    </tr>
+    </thead>
     <tbody>
-      @for (inventory of inventoryDetails; track inventory.ProductId){
-      <tr >
-        <th scope="row">{{inventory.ProductId}}</th>
-        <td>{{inventory.ProductName}}</td>
-        <td>{{inventory.AvailableQty}}</td>
-        <td>{{inventory.ReOrderPoint}}</td>
-        <td>
-          <button type="button" class="btn btn-primary">Edit</button>
-          <button type="button" class="btn btn-danger mx-2">Delete</button>
-        </td>
-      }
+      @for (inventory of inventoryDetails; track inventory.ProductId) {
+        <tr>
+          <th scope="row">{{ inventory.ProductId }}</th>
+          <td>{{ inventory.ProductName }}</td>
+          <td>{{ inventory.AvailableQty }}</td>
+          <td>{{ inventory.ReOrderPoint }}</td>
+          <td>
+            <button type="button" class="btn btn-primary">Edit</button>
+            <button type="button" class="btn btn-danger mx-2" (click)="openConfirmDialog(inventory.ProductId)">Delete
+            </button>
+          </td>
+          }
     </tbody>
-	</table>
+  </table>
 </div>
