@@ -1,30 +1,34 @@
 import {Component, inject, OnInit} from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DialogBoxComponent} from '../dialog-box/dialog-box.component';
 
 @Component({
-	selector: 'app-inventory',
-	imports: [FormsModule, CommonModule],
-	templateUrl: './inventory.component.html',
-	styleUrl: './inventory.component.css',
+  selector: 'app-inventory',
+  imports: [FormsModule, CommonModule],
+  templateUrl: './inventory.component.html',
+  styleUrl: './inventory.component.css',
 })
 export class InventoryComponent implements OnInit {
   httpClient = inject(HttpClient);
-
+  // Variable to hold the ID of the product to be deleted.
+  productIdToDelete: number = 0;
   // Object holding the form data.
-	inventoryData = {
-		productId: '',
-		productName: '',
-		availableQty: 0,
-		reorderPoint: 0,
-	};
-
+  inventoryData = {
+    productId: '',
+    productName: '',
+    availableQty: 0,
+    reorderPoint: 0,
+  };
   inventoryDetails: any[] = []; // Initialize as an empty array
+  private modalService = inject(NgbModal);
 
   ngOnInit() {
     this.fetchInventory();
   }
+
   fetchInventory() {
 
     const apiUrl = "https://localhost:7107/api/Inventory";
@@ -38,7 +42,7 @@ export class InventoryComponent implements OnInit {
   }
 
   // Called when form is submitted.
-	onSubmit(): void {
+  onSubmit(): void {
     // URL to which the form data will be POSTed.
     const apiUrl = "https://localhost:7107/api/Inventory";
     // Contains HTTP Headers, including the Authorization token and content type.
@@ -64,6 +68,42 @@ export class InventoryComponent implements OnInit {
           availableQty: 0,
           reorderPoint: 0
         };
+      }
+    });
+  }
+
+  openConfirmDialog(productId: number) {
+    // Set the productIdToDelete variable to the ID of the product to be deleted.
+    this.productIdToDelete = productId;
+    console.log('Product ID to delete: ' + this.productIdToDelete);
+    // Open the dialog box using the DialogBoxComponent and a callback function.
+    this.modalService.open(DialogBoxComponent).result.then((data) => {
+      // If the event is 'confirm', call the deleteProduct method.
+      if (data.event === 'confirm') {
+        this.deleteProduct();
+        console.log('The Delete Event is confirmed');
+      }
+    });
+  }
+
+  deleteProduct() {
+    // URL to which the DELETE request will be sent.
+    const apiUrl = `https://localhost:7107/api/Inventory?productId=${this.productIdToDelete}`;
+    // Contains HTTP Headers, including the Authorization token and content type.
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      })
+    }
+    // This method sends a DELETE request to the API with the product ID and HTTP Options.
+    // Subscribe handles the response from the API.
+    this.httpClient.delete(apiUrl, httpOptions).subscribe({
+      complete: () => {
+        // Fetch the updated inventory *after* the DELETE is complete.
+        this.fetchInventory();
+        // Reset the productIdToDelete variable to 0.
+        this.productIdToDelete = 0;
       }
     });
   }
