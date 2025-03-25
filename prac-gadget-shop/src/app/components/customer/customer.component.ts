@@ -15,5 +15,4 @@ export class CustomerComponent {
   openAddCustomerDialog(){
     this.modalService.open(AddCustomerDialogComponent)
   }
-
 }
