@@ -17,17 +17,19 @@
     </tr>
     </thead>
     <tbody>
+      @for (customer of customerData ; track customer.CustomerId) {
     <tr>
-      <th scope="row">13213</th>
-      <td>Abdullah Yusuf</td>
-      <td>Email</td>
-      <td>Phone</td>
-      <td>RegDate</td>
-      <td>
-        <button type="button" class="btn btn-primary">Edit</button>
-        <button type="button" class="btn btn-danger mx-2">Delete</button>
-      </td>
+        <th scope="row">{{customer.CustomerId}}</th>
+        <td>{{customer.FirstName}} {{customer.LastName}}</td>
+        <td>{{customer.Email}}</td>
+        <td>{{customer.Phone}}</td>
+        <td>{{customer.RegistrationDate}}</td>
+        <td>
+          <button type="button" class="btn btn-primary">Edit</button>
+          <button type="button" class="btn btn-danger mx-2">Delete</button>
+        </td>
     </tr>
+      }
     </tbody>
   </table>
 </div>

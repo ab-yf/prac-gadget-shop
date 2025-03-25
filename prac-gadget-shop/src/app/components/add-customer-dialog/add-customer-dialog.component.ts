@@ -2,6 +2,7 @@ import {Component, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-customer-dialog',
@@ -15,6 +16,7 @@ import {CommonModule} from '@angular/common';
 export class AddCustomerDialogComponent {
 
   httpClient = inject(HttpClient);
+  modal = inject(NgbActiveModal);
 
   customerDetails = {
     customerId: "",
@@ -45,6 +47,7 @@ export class AddCustomerDialogComponent {
       },
       complete: () => {
         alert("Customer added successfully" + JSON.stringify(this.customerDetails));
+        this.modal.close();
       }
     })
   }
