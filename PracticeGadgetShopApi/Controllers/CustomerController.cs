@@ -82,5 +82,32 @@ namespace PracticeGadgetShopApi.Controllers
 
             return Ok(JsonConvert.SerializeObject(customerList));
         }
+        [HttpDelete]
+        public ActionResult DeleteCustomerData(int customerId)
+        {
+            SqlConnection connection = new SqlConnection
+            {
+                ConnectionString = "Server=localhost\\SQLEXPRESS;Database=gadgetShop;Trusted_Connection=True;TrustServerCertificate=true"
+            };
+
+            SqlCommand command = new SqlCommand
+            {
+                // The name of our stored procedure which deletes the Customer Details/Data from our Customer table in the database.
+                CommandText = "sp_DeleteCustomerData",
+                CommandType = CommandType.StoredProcedure,
+                Connection = connection
+            };
+
+            // The parameter we are passing to the stored procedure to delete the customer data
+            command.Parameters.AddWithValue("@CustomerId", customerId); 
+
+            connection.Open();
+
+            command.ExecuteNonQuery(); //no database retrieval, only inserting data, which is why we used non-query
+
+            connection.Close();
+
+            return Ok();
+        }
     }
 }
