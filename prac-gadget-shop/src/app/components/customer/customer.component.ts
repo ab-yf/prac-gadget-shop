@@ -1,7 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddCustomerDialogComponent } from '../add-customer-dialog/add-customer-dialog.component';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 
 @Component({
     selector: 'app-customer',
@@ -12,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 export class CustomerComponent implements OnInit {
     httpClient = inject(HttpClient);
     customerData: any;
+    customerIdToDelete: number = 0;
     private modalService = inject(NgbModal);
 
     openAddCustomerDialog() {
@@ -24,6 +26,16 @@ export class CustomerComponent implements OnInit {
             });
     }
 
+    openConfirmDeleteDialog(customerId: number) {
+        this.customerIdToDelete = customerId;
+        this.modalService.open(DialogBoxComponent).result.then((data) => {
+            if (data.event === 'confirm') {
+                this.deleteCustomerData();
+                console.log('The Delete Event is confirmed');
+            }
+        });
+    }
+
     ngOnInit(): void {
         this.getCustomerData();
     }
@@ -34,6 +46,23 @@ export class CustomerComponent implements OnInit {
         this.httpClient.get(apiUrl).subscribe((result) => {
             this.customerData = result;
             console.log(this.customerData);
+        });
+    }
+
+    deleteCustomerData() {
+        const apiUrl = `https://localhost:7107/api/Customer?customerId=${this.customerIdToDelete}`;
+        const httpOptions = {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type': 'application/json',
+            }),
+        };
+
+        this.httpClient.delete(apiUrl, httpOptions).subscribe({
+            complete: () => {
+                this.getCustomerData();
+                this.customerIdToDelete = 0;
+            },
         });
     }
 }
