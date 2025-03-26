@@ -5,6 +5,7 @@
             <div class="col">
                 <input
                     [(ngModel)]="customerDetails.customerId"
+                    [disabled]="disableCustomerIdInput"
                     aria-label="Customer ID"
                     class="form-control"
                     name="customerId"
@@ -67,6 +68,6 @@
                 />
             </div>
         </div>
-        <button class="btn btn-primary" type="submit">Add</button>
+        <button class="btn btn-primary" type="submit">{{ addCustomerBtnText }}</button>
     </form>
 </div>

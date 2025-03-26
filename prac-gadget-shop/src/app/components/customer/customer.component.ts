@@ -13,7 +13,7 @@ import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 export class CustomerComponent implements OnInit {
     httpClient = inject(HttpClient);
     private modalService = inject(NgbModal);
-    customerData: any;
+    customerDetails: any;
     customerIdToDelete: number = 0;
 
     openAddCustomerDialog() {
@@ -44,8 +44,8 @@ export class CustomerComponent implements OnInit {
         // Get customer data from database
         const apiUrl = 'https://localhost:7107/api/Customer';
         this.httpClient.get(apiUrl).subscribe((result) => {
-            this.customerData = result;
-            console.log(this.customerData);
+            this.customerDetails = result;
+            console.log(this.customerDetails);
         });
     }
 
@@ -63,6 +63,28 @@ export class CustomerComponent implements OnInit {
                 this.getCustomerData();
                 this.customerIdToDelete = 0;
             },
+        });
+    }
+
+    openEditCustomerDialog(customer: any) {
+        // Open the dialog box using the DialogBoxComponent and a callback function.
+        // We are using modalReference because we need to pass the customer data to the dialog box input.
+        const modalReference = this.modalService.open(
+            AddCustomerDialogComponent,
+        );
+        // Set the customer data to be edited in the modal.
+        modalReference.componentInstance.customer = {
+            customerId: customer.CustomerId,
+            firstName: customer.FirstName,
+            lastName: customer.LastName,
+            email: customer.Email,
+            phone: customer.Phone,
+            registrationDate: customer.RegistrationDate,
+        };
+        modalReference.result.then((data) => {
+            if (data.event === 'closed') {
+                this.getCustomerData();
+            }
         });
     }
 }
