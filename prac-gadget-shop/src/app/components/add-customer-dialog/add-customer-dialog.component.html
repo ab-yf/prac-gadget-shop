@@ -3,36 +3,68 @@
     <form (ngSubmit)="onSubmit()">
         <div class="row py-3">
             <div class="col">
-                <input [(ngModel)]="customerDetails.customerId" aria-label="Customer ID" class="form-control"
-                       name="customerId"
-                       placeholder="Customer ID" type="text">
+                <input
+                    [(ngModel)]="customerDetails.customerId"
+                    aria-label="Customer ID"
+                    class="form-control"
+                    name="customerId"
+                    placeholder="Customer ID"
+                    type="text"
+                />
             </div>
             <div class="col">
-                <input [(ngModel)]="customerDetails.registrationDate" aria-label="Registration Date"
-                       class="form-control" name="registrationDate"
-                       placeholder="dd/mm/yyyy" type="date">
-            </div>
-        </div>
-        <div class="row py-3">
-            <div class="col">
-                <input [(ngModel)]="customerDetails.firstName" aria-label="First Name" class="form-control"
-                       name="firstName"
-                       placeholder="First Name" type="text">
-            </div>
-            <div class="col">
-                <input [(ngModel)]="customerDetails.lastName" aria-label="Last Name" class="form-control"
-                       name="lastName"
-                       placeholder="Last Name" type="text">
+                <input
+                    [(ngModel)]="customerDetails.registrationDate"
+                    aria-label="Registration Date"
+                    class="form-control"
+                    name="registrationDate"
+                    placeholder="dd/mm/yyyy"
+                    type="date"
+                />
             </div>
         </div>
         <div class="row py-3">
             <div class="col">
-                <input [(ngModel)]="customerDetails.phone" aria-label="Phone Number" class="form-control" name="phone"
-                       placeholder="Phone Number" type="email">
+                <input
+                    [(ngModel)]="customerDetails.firstName"
+                    aria-label="First Name"
+                    class="form-control"
+                    name="firstName"
+                    placeholder="First Name"
+                    type="text"
+                />
             </div>
             <div class="col">
-                <input [(ngModel)]="customerDetails.email" aria-label="Email" class="form-control" name="email"
-                       placeholder="Email" type="email">
+                <input
+                    [(ngModel)]="customerDetails.lastName"
+                    aria-label="Last Name"
+                    class="form-control"
+                    name="lastName"
+                    placeholder="Last Name"
+                    type="text"
+                />
+            </div>
+        </div>
+        <div class="row py-3">
+            <div class="col">
+                <input
+                    [(ngModel)]="customerDetails.phone"
+                    aria-label="Phone Number"
+                    class="form-control"
+                    name="phone"
+                    placeholder="Phone Number"
+                    type="email"
+                />
+            </div>
+            <div class="col">
+                <input
+                    [(ngModel)]="customerDetails.email"
+                    aria-label="Email"
+                    class="form-control"
+                    name="email"
+                    placeholder="Email"
+                    type="email"
+                />
             </div>
         </div>
         <button class="btn btn-primary" type="submit">Add</button>
