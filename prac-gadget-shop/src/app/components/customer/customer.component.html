@@ -1,35 +1,45 @@
 <div class="row g-3 mx-3 py-3">
-  <div class="col-auto">
-    <button type="submit" class="btn btn-primary" (click)="openAddCustomerDialog()">Add a new Customer</button>
-  </div>
+    <div class="col-auto">
+        <button
+            (click)="openAddCustomerDialog()"
+            class="btn btn-primary"
+            type="submit"
+        >
+            Add a new Customer
+        </button>
+    </div>
 </div>
 <div class="row mx-3">
-  <h5>Customer Details</h5>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th scope="col">Customer Id</th>
-      <th scope="col">Customer Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Phone</th>
-      <th scope="col">Registration Date</th>
-      <th scope="col">Action</th>
-    </tr>
-    </thead>
-    <tbody>
-      @for (customer of customerData ; track customer.CustomerId) {
-    <tr>
-        <th scope="row">{{customer.CustomerId}}</th>
-        <td>{{customer.FirstName}} {{customer.LastName}}</td>
-        <td>{{customer.Email}}</td>
-        <td>{{customer.Phone}}</td>
-        <td>{{customer.RegistrationDate}}</td>
-        <td>
-          <button type="button" class="btn btn-primary">Edit</button>
-          <button type="button" class="btn btn-danger mx-2">Delete</button>
-        </td>
-    </tr>
-      }
-    </tbody>
-  </table>
+    <h5>Customer Details</h5>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Customer Id</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Registration Date</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (customer of customerData; track customer.CustomerId) {
+                <tr>
+                    <th scope="row">{{ customer.CustomerId }}</th>
+                    <td>{{ customer.FirstName }} {{ customer.LastName }}</td>
+                    <td>{{ customer.Email }}</td>
+                    <td>{{ customer.Phone }}</td>
+                    <td>{{ customer.RegistrationDate }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary">
+                            Edit
+                        </button>
+                        <button type="button" class="btn btn-danger mx-2">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
