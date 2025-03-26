@@ -72,7 +72,7 @@ namespace PracticeGadgetShopApi.Controllers
                     customerDto.LastName = Convert.ToString(reader["LastName"].ToString());
                     customerDto.Email = Convert.ToString(reader["Email"].ToString());
                     customerDto.Phone = Convert.ToString(reader["Phone"].ToString());
-                    customerDto.RegistrationDate = Convert.ToDateTime(reader["RegistrationDate"]);
+                    customerDto.RegistrationDate = Convert.ToString(reader["RegistrationDate"]);
 
                     customerList.Add(customerDto);
                 }

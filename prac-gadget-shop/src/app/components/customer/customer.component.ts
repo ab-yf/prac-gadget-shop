@@ -12,9 +12,9 @@ import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 })
 export class CustomerComponent implements OnInit {
     httpClient = inject(HttpClient);
+    private modalService = inject(NgbModal);
     customerData: any;
     customerIdToDelete: number = 0;
-    private modalService = inject(NgbModal);
 
     openAddCustomerDialog() {
         this.modalService

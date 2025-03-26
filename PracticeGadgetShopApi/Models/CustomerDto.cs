@@ -9,7 +9,7 @@
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public DateTime RegistrationDate { get; set; }
+        public string RegistrationDate { get; set; }
 
         #endregion
     }
