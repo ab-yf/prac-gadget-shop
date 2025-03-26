@@ -12,7 +12,7 @@ namespace PracticeGadgetShopApi.Controllers
     public class CustomerController : ControllerBase
     {
         [HttpPost]
-        public ActionResult SaveCustomerData(CustomerRequestDto requestDto)
+        public ActionResult SaveCustomerData(CustomerRequestDto customerRequest)
         {
             SqlConnection connection = new SqlConnection
             {
@@ -27,16 +27,16 @@ namespace PracticeGadgetShopApi.Controllers
                 Connection = connection
             };
 
-            command.Parameters.AddWithValue("@CustomerId", requestDto.CustomerId); //insertion of data into our SQL database using the names in the stored procedure
-            command.Parameters.AddWithValue("@FirstName", requestDto.FirstName);
-            command.Parameters.AddWithValue("@LastName", requestDto.LastName);
-            command.Parameters.AddWithValue("@Email", requestDto.Email);
-            command.Parameters.AddWithValue("@Phone", requestDto.Phone);
-            command.Parameters.AddWithValue("@RegistrationDate", requestDto.RegistrationDate);
+            command.Parameters.AddWithValue("@CustomerId", customerRequest.CustomerId); // Insertion of data into our SQL database using the names in the stored procedure
+            command.Parameters.AddWithValue("@FirstName", customerRequest.FirstName);
+            command.Parameters.AddWithValue("@LastName", customerRequest.LastName);
+            command.Parameters.AddWithValue("@Email", customerRequest.Email);
+            command.Parameters.AddWithValue("@Phone", customerRequest.Phone);
+            command.Parameters.AddWithValue("@RegistrationDate", customerRequest.RegistrationDate);
 
             connection.Open();
 
-            command.ExecuteNonQuery(); //no database retrieval, only inserting data, which is why we used non-query
+            command.ExecuteNonQuery(); // No database retrieval, only inserting data, which is why we used non-query
 
             connection.Close();
 
@@ -103,11 +103,49 @@ namespace PracticeGadgetShopApi.Controllers
 
             connection.Open();
 
-            command.ExecuteNonQuery(); //no database retrieval, only inserting data, which is why we used non-query
+            command.ExecuteNonQuery(); // No database retrieval, only inserting data, which is why we used non-query
 
             connection.Close();
 
             return Ok();
+        }
+
+        [HttpPut]
+        // We are accepting a paramter called customerRequest according to the CustomerRequestDto model.
+        public ActionResult<CustomerDto> UpdateCustomerData(CustomerRequestDto customerRequest)
+        {
+            SqlConnection connection = new SqlConnection
+            {
+                ConnectionString = "Server=localhost\\SQLEXPRESS;Database=gadgetShop;Trusted_Connection=True;TrustServerCertificate=true"
+            };
+
+            SqlCommand command = new SqlCommand
+            {
+                // The name of our stored procedure which updates the data from our Customer table in the database.
+                CommandText = "sp_UpdateCustomerData",
+                CommandType = CommandType.StoredProcedure,
+                Connection = connection
+            };
+
+            connection.Open();
+
+            // Our function accepts the customerId as a parameter, which is then used to update the data from the database.
+            // Updating of data into our SQL database using the names in the stored procedure
+            command.Parameters.AddWithValue("@CustomerId", customerRequest.CustomerId);
+            command.Parameters.AddWithValue("@FirstName", customerRequest.FirstName);
+            command.Parameters.AddWithValue("@LastName", customerRequest.LastName);
+            command.Parameters.AddWithValue("@Email", customerRequest.Email);
+            command.Parameters.AddWithValue("@Phone", customerRequest.Phone);
+            command.Parameters.AddWithValue("@RegistrationDate", customerRequest.RegistrationDate);
+
+            // We are using the non-query method as we are not retrieving data, only updating it.
+            command.ExecuteNonQuery();
+
+            connection.Close();
+
+            // We are returning an OK status code to indicate that the data has been updated.
+            return Ok();
+
         }
     }
 }

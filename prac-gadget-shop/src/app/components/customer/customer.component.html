@@ -23,7 +23,7 @@
         </tr>
         </thead>
         <tbody>
-            @for (customer of customerData; track customer.CustomerId) {
+            @for (customer of customerDetails; track customer.CustomerId) {
                 <tr>
                     <th scope="row">{{ customer.CustomerId }}</th>
                     <td>{{ customer.FirstName }} {{ customer.LastName }}</td>
@@ -31,7 +31,7 @@
                     <td>{{ customer.Phone }}</td>
                     <td>{{ customer.RegistrationDate }}</td>
                     <td>
-                        <button type="button" class="btn btn-primary">
+                        <button type="button" class="btn btn-primary" (click)="openEditCustomerDialog(customer)">
                             Edit
                         </button>
                         <button

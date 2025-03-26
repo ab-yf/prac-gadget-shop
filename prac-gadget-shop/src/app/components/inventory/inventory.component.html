@@ -24,7 +24,7 @@
 
         <div class="col-sm-3">
             <label class="visually-hidden" for="specificSizeInputName"
-                >Product Id</label
+            >Product Id</label
             >
             <input
                 type="text"
@@ -38,7 +38,7 @@
         </div>
         <div class="col-sm-3">
             <label class="visually-hidden" for="specificSizeSelect"
-                >Product</label
+            >Product</label
             >
             <select
                 class="form-select"
@@ -54,7 +54,7 @@
         </div>
         <div class="col-sm-3">
             <label class="visually-hidden" for="specificSizeInputName"
-                >Quantity Available</label
+            >Quantity Available</label
             >
             <input
                 type="text"
@@ -67,7 +67,7 @@
         </div>
         <div class="col-sm-3">
             <label class="visually-hidden" for="specificSizeInputName"
-                >Reorder Qty</label
+            >Reorder Qty</label
             >
             <input
                 type="text"
@@ -88,13 +88,13 @@
     <h5>Inventory Details</h5>
     <table class="table table-striped">
         <thead>
-            <tr>
-                <th scope="col">Product Id</th>
-                <th scope="col">Product Name</th>
-                <th scope="col">Stock Available</th>
-                <th scope="col">Reorder Point</th>
-                <th scope="col">Action</th>
-            </tr>
+        <tr>
+            <th scope="col">Product Id</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Stock Available</th>
+            <th scope="col">Reorder Point</th>
+            <th scope="col">Action</th>
+        </tr>
         </thead>
         <tbody>
             @for (inventory of inventoryDetails; track inventory.ProductId) {
@@ -107,7 +107,7 @@
                         <button
                             type="button"
                             class="btn btn-primary"
-                            (click)="populateFormForEdit(inventory)"
+                            (click)="populateFormForInventoryEdit(inventory)"
                         >
                             Edit
                         </button>

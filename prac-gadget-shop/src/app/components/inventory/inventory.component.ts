@@ -13,10 +13,12 @@ import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 })
 export class InventoryComponent implements OnInit {
     httpClient = inject(HttpClient);
+    private modalService = inject(NgbModal);
     // Variable to hold the ID of the product to be deleted.
     productIdToDelete: number = 0;
     // Variable to hold the value of the productId input field.
     disableProductIdInput = false;
+    inventoryDetails: any[] = []; // Initialize as an empty array
     // Object holding the form data.
     inventoryData = {
         productId: '',
@@ -24,8 +26,6 @@ export class InventoryComponent implements OnInit {
         availableQty: 0,
         reorderPoint: 0,
     };
-    inventoryDetails: any[] = []; // Initialize as an empty array
-    private modalService = inject(NgbModal);
 
     ngOnInit() {
         this.fetchInventory();
@@ -147,7 +147,7 @@ export class InventoryComponent implements OnInit {
         });
     }
 
-    populateFormForEdit(inventory: any) {
+    populateFormForInventoryEdit(inventory: any) {
         // Populate the form with the data of the product to be edited.
         this.inventoryData.productId = inventory.ProductId;
         this.inventoryData.productName = inventory.ProductName;
